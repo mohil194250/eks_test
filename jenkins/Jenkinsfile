@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    parameters {
+        choice( choices: ['dev', 'uat' ,'prod'], description: "Deployment Environment", name: 'ENVIRONMENT_TYPE')
+        string( defaultValue: 'hello-world', description: "Project Name", name: 'PROJECT_NAME')
+        // string( defaultValue: 'dev', description: "Deployment Environment", name: 'ENVIRONMENT_TYPE')
+         string( defaultValue: 'us-west-2', description: "Deployment Region", name: 'DEPLOYMENT_REGION')
+        // booleanParam ( defaultValue: 'false', description: "Run Terraform Plan Only", name: 'DRY_RUN')
+    }
+    stages {
+        stege ('Initialize') {
+            steps {
+                sh "git clone git@github.com:mohil194250/eks_test.git"
+            }
+        }
+        stage ('build') {
+            step {
+                sh "docker build -t eks-test-image ."
+            }
+        }
+
+        stage ('deploy'){
+            step {
+                sh "docker run  eks-test-image"
+            }
+        }
+        
+    }
+    
+    
