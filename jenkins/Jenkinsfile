@@ -8,7 +8,7 @@ pipeline {
         // booleanParam ( defaultValue: 'false', description: "Run Terraform Plan Only", name: 'DRY_RUN')
     }
     stages {
-        stege ('Initialize') {
+        stage ('Initialize') {
             steps {
                 sh "git clone git@github.com:mohil194250/eks_test.git"
             }
