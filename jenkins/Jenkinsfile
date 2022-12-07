@@ -10,6 +10,7 @@ pipeline {
     stages {
         stage ('Initialize') {
             steps {
+                sh "rm -rf eks_test"
                 sh "git clone git@github.com:mohil194250/eks_test.git"
             }
         }
