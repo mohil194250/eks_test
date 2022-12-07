@@ -16,13 +16,13 @@ pipeline {
         }
         stage ('build') {
             steps {
-                sh "docker build -t eks-test-image ."
+                sh "sudo docker build -t eks-test-image ."
             }
         }
 
         stage ('deploy'){
             steps {
-                sh "docker run  eks-test-image"
+                sh "sudo docker run  eks-test-image"
             }
         }
         
