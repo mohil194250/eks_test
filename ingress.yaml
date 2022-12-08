@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: eks-test
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ac3a1423f24c4484e9b844bdf77152f6-901995560.us-west-2.elb.amazonaws.com
+    http:
+      paths:
+      - path: /dev
+        pathType: Prefix
+        backend:
+          service:
+            name: eks-test-dev
+            port:
+              number: 80
+  - host: ac3a1423f24c4484e9b844bdf77152f6-901995560.us-west-2.elb.amazonaws.com
+    http:
+      paths:
+      - path: /uat
+        pathType: Prefix
+        backend:
+          service:
+            name: eks-test-uat
+            port:
+              number: 80
+  - host: ac3a1423f24c4484e9b844bdf77152f6-901995560.us-west-2.elb.amazonaws.com
+    http:
+      paths:
+      - path: /prod
+        pathType: Prefix
+        backend:
+          service:
+            name: eks-test-prod
+            port:
+              number: 80
