@@ -32,17 +32,15 @@ pipeline {
 
         stage ('deploy to uat') {
             steps {
-                sh "aws eks update-kubeconfig --name eks-test-cluster --region us-west-2"
-                sh "sed -i 's/eks-test-dev/eks-test-uat/g' deployment.yaml -n uat"
-                sh "kubectl create -f deployment.yaml"
+                sh "sed -i 's/eks-test-dev/eks-test-uat/g' deployment.yaml"
+                sh "kubectl create -f deployment.yaml -n uat"
                 sh "kubectl get pods"
             }
         }
         stage ('deploy to prod') {
             steps {
-                sh "aws eks update-kubeconfig --name eks-test-cluster --region us-west-2"
-                sh "sed -i 's/eks-test-uat/eks-test-prod/g' deployment.yaml -n prod"
-                sh "kubectl create -f deployment.yaml"
+                sh "sed -i 's/eks-test-uat/eks-test-prod/g' deployment.yaml"
+                sh "kubectl create -f deployment.yaml -n prod"
                 sh "kubectl get pods"
             }
         }
