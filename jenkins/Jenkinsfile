@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    parameters {
+        //choice( choices: ['dev', 'uat' ,'prod'], description: "Deployment Environment", name: 'ENVIRONMENT_TYPE')
+        string( defaultValue: 'hello-world', description: "Project Name", name: 'PROJECT_NAME')
+        // string( defaultValue: 'dev', description: "Deployment Environment", name: 'ENVIRONMENT_TYPE')
+         string( defaultValue: 'us-west-2', description: "Deployment Region", name: 'DEPLOYMENT_REGION')
+        // booleanParam ( defaultValue: 'false', description: "Run Terraform Plan Only", name: 'DRY_RUN')
+    }
+    stages {
+        stage ('Initialize') {
+            steps {
+                sh "rm -rf eks_test"
+                sh "git clone git@github.com:mohil194250/eks_test.git"
+            }
+        }
+        stage ('build') {
+            steps {
+                sh "sudo docker build -t humancloudak/k8-poc ."
+                sh "sudo docker push humancloudak/k8-poc"
+            }
+        }
+
+        stage ('deploy to dev') {
+            steps {
+                sh "kubectl delete deploy eks-test-dev -n dev"
+                sh "kubectl delete service eks-test-dev -n dev"
+                sh "aws eks update-kubeconfig --name eks-test-cluster --region us-west-2"
+                sh "sed -i 's/eks-test/eks-test-dev/g' deployment.yaml"
+                sh "kubectl create -f deployment.yaml -n dev"
+                sh "kubectl get pods"
+            }
+        }
+
+        stage ('deploy to uat') {
+            steps {
+                sh "kubectl delete deploy eks-test-uat -n uat"
+                sh "kubectl delete service eks-test-uat -n uat"
+                sh "sed -i 's/eks-test-dev/eks-test-uat/g' deployment.yaml"
+                sh "kubectl create -f deployment.yaml -n uat"
+                sh "kubectl get pods"
+            }
+        }
+        stage ('deploy to prod') {
+                steps {
+                sh "kubectl delete deploy eks-test-prod -n prod"
+                sh "kubectl delete service eks-test-prod -n prod"
+                sh "sed -i 's/eks-test-uat/eks-test-prod/g' deployment.yaml"
+                sh "kubectl create -f deployment.yaml -n prod"
+                sh "kubectl get pods"
+            }
+        }
+        
+    }
+}
+    
+    
