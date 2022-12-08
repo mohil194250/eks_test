@@ -23,7 +23,6 @@ pipeline {
 
         stage ('deploy to dev') {
             steps {
-                sh "kubectl delete -f deployment.yaml"
                 sh "aws eks update-kubeconfig --name eks-test-cluster --region us-west-2"
                 sh "sed -i 's/eks-test/eks-test-dev/g' deployment.yaml"
                 sh "kubectl create -f deployment.yaml -n dev"
@@ -33,7 +32,6 @@ pipeline {
 
         stage ('deploy to uat') {
             steps {
-                sh "kubectl delete -f deployment.yaml"
                 sh "aws eks update-kubeconfig --name eks-test-cluster --region us-west-2"
                 sh "sed -i 's/eks-test/eks-test-uat/g' deployment.yaml -n uat"
                 sh "kubectl create -f deployment.yaml"
@@ -42,7 +40,6 @@ pipeline {
         }
         stage ('deploy to prod') {
             steps {
-                sh "kubectl delete -f deployment.yaml"
                 sh "aws eks update-kubeconfig --name eks-test-cluster --region us-west-2"
                 sh "sed -i 's/eks-test/eks-test-prod/g' deployment.yaml -n prod"
                 sh "kubectl create -f deployment.yaml"
