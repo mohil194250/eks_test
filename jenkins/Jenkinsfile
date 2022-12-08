@@ -22,7 +22,9 @@ pipeline {
 
         stage ('deploy'){
             steps {
-                sh "sudo docker run  eks-test-image"
+                sh "aws eks update-kubeconfig --eks-test-cluster"
+                sh "kubectl create -f deployment.yaml"
+                sh "kubectl get pods"
             }
         }
         
