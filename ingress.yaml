@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: ac3a1423f24c4484e9b844bdf77152f6-901995560.us-west-2.elb.amazonaws.com
+  - host: a481059493aa64f0cbed5c89d4eb6498-1066689816.us-west-2.elb.amazonaws.com
     http:
       paths:
       - path: /dev
@@ -17,7 +17,7 @@ spec:
             name: eks-test-dev
             port:
               number: 80
-  - host: ac3a1423f24c4484e9b844bdf77152f6-901995560.us-west-2.elb.amazonaws.com
+  - host: a481059493aa64f0cbed5c89d4eb6498-1066689816.us-west-2.elb.amazonaws.com
     http:
       paths:
       - path: /uat
@@ -27,7 +27,7 @@ spec:
             name: eks-test-uat
             port:
               number: 80
-  - host: ac3a1423f24c4484e9b844bdf77152f6-901995560.us-west-2.elb.amazonaws.com
+  - host: a481059493aa64f0cbed5c89d4eb6498-1066689816.us-west-2.elb.amazonaws.com
     http:
       paths:
       - path: /prod
