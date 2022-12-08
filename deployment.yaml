@@ -17,5 +17,8 @@ spec:
       containers:
       - name: eks-test
         image: eks-test-image:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
+      restartPolicy: Never
+
