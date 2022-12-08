@@ -19,4 +19,15 @@ spec:
         image: humancloudak/k8-poc
         ports:
         - containerPort: 80
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eks-test
+  namespace: ingress-nginx
+  labels:
+    app: eks-test
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
