@@ -24,6 +24,7 @@ pipeline {
         stage ('deploy to dev') {
             steps {
                 sh "kubectl delete deploy eks-test-dev -n dev"
+                sh "kubectl delete service eks-test-dev -n dev"
                 sh "aws eks update-kubeconfig --name eks-test-cluster --region us-west-2"
                 sh "sed -i 's/eks-test/eks-test-dev/g' deployment.yaml"
                 sh "kubectl create -f deployment.yaml -n dev"
@@ -33,7 +34,8 @@ pipeline {
 
         stage ('deploy to uat') {
             steps {
-                h "kubectl delete deploy eks-test-uat -n uat"
+                sh "kubectl delete deploy eks-test-uat -n uat"
+                sh "kubectl delete service eks-test-uat -n uat"
                 sh "sed -i 's/eks-test-dev/eks-test-uat/g' deployment.yaml"
                 sh "kubectl create -f deployment.yaml -n uat"
                 sh "kubectl get pods"
@@ -42,6 +44,7 @@ pipeline {
         stage ('deploy to prod') {
             steps {
                 sh "kubectl delete deploy eks-test-prod -n prod"
+                sh "kubectl delete service eks-test-prod -n prod"
                 sh "sed -i 's/eks-test-uat/eks-test-prod/g' deployment.yaml"
                 sh "kubectl create -f deployment.yaml -n prod"
                 sh "kubectl get pods"
