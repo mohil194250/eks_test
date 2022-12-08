@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eks-test
+  labels:
+    app: eks-test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: eks-test
+  template:
+    metadata:
+      labels:
+        app: eks-test
+    spec:
+      containers:
+      - name: eks-test
+        image: eks-test-image:latest
+        ports:
+        - containerPort: 80
