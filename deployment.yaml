@@ -24,7 +24,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: eks-test
-  namespace: ingress-nginx
   labels:
     app: eks-test
 spec:
