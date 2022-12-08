@@ -16,9 +16,7 @@ spec:
     spec:
       containers:
       - name: eks-test
-        image: eks-test-image:latest
-        imagePullPolicy: Never
+        image: humancloudak/k8-poc
         ports:
         - containerPort: 80
-      restartPolicy: Never
 

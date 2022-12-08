@@ -1,5 +1,2 @@
-FROM openjdk:8
-COPY hello_world.java hello_world.java
-RUN javac hello_world.java
-
-ENTRYPOINT [ "java", "HelloWorld" ]
+FROM bitnami/tomcat:latest
+COPY java-project/SampleWebApp.war /opt/bitnami/tomcat/webapps_default

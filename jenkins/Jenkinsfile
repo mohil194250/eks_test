@@ -16,7 +16,8 @@ pipeline {
         }
         stage ('build') {
             steps {
-                sh "sudo docker build -t eks-test-image ."
+                sh "sudo docker build -t humancloudak/k8-poc ."
+                sh "sudo docker push humancloudak/k8-poc"
             }
         }
 
