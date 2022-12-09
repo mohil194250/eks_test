@@ -17,21 +17,20 @@ pipeline {
                 sh "sudo docker push humancloudak/k8-poc"
             }
         }
-
         stage ('deploy to dev') {
             steps {
-                sh "helm upgrade --install eks-test-dev --set image.repository=humancloudak/k8-poc--set image.tag=latest --set image.pullPolicy=Always bitnami/tomcat -n dev"
+                sh "helm upgrade --install eks-test-dev --set image.repository=humancloudak/k8-poc --set image.tag=latest --set image.pullPolicy=Always bitnami/tomcat -n dev"
             }
         }
 
         stage ('deploy to uat') {
             steps {
-                sh "helm upgrade --install eks-test-uat --set image.repository=humancloudak/k8-poc--set image.tag=latest --set image.pullPolicy=Always bitnami/tomcat -n uat"
+                sh "helm upgrade --install eks-test-uat --set image.repository=humancloudak/k8-poc --set image.tag=latest --set image.pullPolicy=Always bitnami/tomcat -n uat"
             }
         }
         stage ('deploy to prod') {
             steps {
-                sh "helm  upgrade --install eks-test-prod --set image.repository=humancloudak/k8-poc--set image.tag=latest --set image.pullPolicy=Always bitnami/tomcat -n prod"
+                sh "helm upgrade --install eks-test-prod --set image.repository=humancloudak/k8-poc --set image.tag=latest --set image.pullPolicy=Always bitnami/tomcat -n prod"
             }
         }
         
