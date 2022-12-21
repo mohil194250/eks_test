@@ -3,12 +3,18 @@ pipeline {
     parameters {
         string( defaultValue: 'hello-world', description: "Project Name", name: 'PROJECT_NAME')
         string( defaultValue: 'us-west-2', description: "Deployment Region", name: 'DEPLOYMENT_REGION')
+        string( description: "git feature name", name: "GIT_FEATURE_BRANCH")
     }
     stages {
         stage ('Initialize') {
             steps {
                 sh "rm -rf eks_test"
                 sh "git clone git@github.com:mohil194250/eks_test.git"
+            }
+        }
+        stage ('namespace creation'){
+            steps {
+                sh "kubectl create namespace ${prams.GIT_FEATURE_BRANCH}"
             }
         }
         stage ('build') {
@@ -35,6 +41,18 @@ pipeline {
         }
         
     }
+    
 }
-    
-    
+
+
+        // // stage ('deploy') {
+        //     if (env.branch_name == 'dev') {
+        //         sh "helm upgrade --install eks-test-dev --set image.repository=humancloudak/k8-poc --set image.tag=latest --set image.pullPolicy=Always bitnami/tomcat -n dev"
+        //     }
+        //     elif (env.branch_name == 'uat') {
+        //         sh "helm upgrade --install eks-test-uat --set image.repository=humancloudak/k8-poc --set image.tag=latest --set image.pullPolicy=Always bitnami/tomcat -n uat"
+        //     }
+        //     elif (env.branch_name == "prod") {
+        //         sh "helm upgrade --install eks-test-prod --set image.repository=humancloudak/k8-poc --set image.tag=latest --set image.pullPolicy=Always bitnami/tomcat -n prod"
+        //     }
+        // }
