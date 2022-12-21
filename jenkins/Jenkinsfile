@@ -12,11 +12,11 @@ pipeline {
                 sh "git clone git@github.com:mohil194250/eks_test.git"
             }
         }
-        stage ('namespace creation'){
-            steps {
-                sh "kubectl create namespace ${prams.GIT_FEATURE_BRANCH}"
-            }
-        }
+        //stage ('namespace creation'){
+          //  steps {
+            //    sh "kubectl create namespace ${prams.GIT_FEATURE_BRANCH}"
+            //}
+        //}
         stage ('build') {
             steps {
                 sh "sudo docker build -t humancloudak/k8-poc ."
